@@ -9,9 +9,11 @@ class hall(star_cinema):
     def __init__(self,name,rows,cols,hall_no):
         self.seat={}
         self.name=name
+        self.r=rows
+        self.c=cols
         self.show_list=[]
-        self.rows=rows
-        self.cols=cols
+        self.__rows=rows
+        self.__cols=cols
         self.hall_no=hall_no
         super().__init__()
         self.entry_hall(self)
@@ -22,7 +24,7 @@ class hall(star_cinema):
         self.time=time
         x=(self.__id,self.moviname,self.time)
         self.show_list.append(x)
-        self.seat[self.__id]=[[0 for i in range(self.cols)] for j in range(self.rows)]
+        self.seat[self.__id]=[[0 for i in range(self.__cols)] for j in range(self.__rows)]
 
     def book_seat(self,id,row,col):
         f=0
@@ -48,8 +50,17 @@ class hall(star_cinema):
         return ""
 
     def show_available_seat(self,id):
-        for i in range(len(self.seat[id])):
-            print("\t",self.seat[id][i])
+        f=0
+        for i in range(len(self.show_list)):
+            if self.show_list[i][0]==id:
+                f=1
+                break
+        if f==1:
+            for i in range(len(self.seat[id])):
+                print("\t",self.seat[id][i])
+        else:
+            print("INVALID ID")
+        
         return ""
     
 
@@ -75,7 +86,7 @@ while(True):
         for i in range(num):
             row=int(input("row :"))
             col=int(input("col :"))
-            if row>x.rows-1 or col>x.cols-1:
+            if row>x.r-1 or col>x.c-1:
                 print("INVLAID ROW AND COL")
             else:
                 x.book_seat(id,row,col)
@@ -86,17 +97,5 @@ while(True):
     elif op==4:
         break
 
-
-
-
-        
-    
-
-        
-
-
-
-
-    
 
 
